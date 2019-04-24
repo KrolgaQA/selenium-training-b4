@@ -16,14 +16,14 @@ public class AdminSectionChecker {
         private WebDriver driver;
         private WebDriverWait wait;
         private List<WebElement> list;
-        private ListIterator<WebElement> li;
-        private String name;
+        private List<WebElement> listSmall;
+//        private ListIterator<WebElement> li;
 
 
         @Before
         public void start() {
             driver = new ChromeDriver();
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
             wait = new WebDriverWait(driver, 10);
         }
 
@@ -45,16 +45,29 @@ public class AdminSectionChecker {
 //                driver.get("http://localhost/litecart/public_html/admin/");
 //                list = driver.findElements(By.cssSelector("ul#box-apps-menu li"));
 //            }
-//            System.out.println("the end");
             int size = 1;
+            int sizeSmall = 1;
 
             for (int i = 0 ; i < size ; ++i) {
-                list = driver.findElements(By.cssSelector("ul#box-apps-menu li")); //locate all the links
-                size = list.size(); //change the loop itreations number to the right one
-                list.get(i).click(); //click on the link
-                System.out.println(driver.findElement(By.tagName("h1")).getText()); //print the data
-                driver.navigate().back(); //go to previous page
+                list = driver.findElements(By.cssSelector("ul#box-apps-menu li"));
+                size = list.size();
+                String s = list.get(i).getAttribute("id");
+                list.get(i).click();
+                System.out.println(driver.findElement(By.tagName("h1")).getText());
+                listSmall = driver.findElements(By.cssSelector("li#" + s + "ul.docs li"));
+                sizeSmall = listSmall.size();
+                if(sizeSmall>0){
+                for (int j = 0; j < sizeSmall; ++j) {
+                    if (!listSmall.get(j).isSelected()) {
+                        listSmall.get(j).click();
+                        System.out.println(driver.findElement(By.tagName("h1")).getText());
+                        driver.navigate().back();
+                    }
+                }
+                }
             }
+            driver.navigate().back();
+
         }
 
     @After
