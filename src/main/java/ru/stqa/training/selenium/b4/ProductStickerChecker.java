@@ -27,7 +27,7 @@ public class ProductStickerChecker {
     @Test
     public void productStickerCheck(){
         driver.get("http://localhost/litecart/public_html/");
-        list = driver.findElements(By.xpath("//div[contains(@class,'col-xs-6')]"));
+        list = driver.findElements(By.xpath("//div[contains(@class,'product ')]"));
         System.out.println(list.size());
         for (int i = 0; i < list.size(); i++) {
             Assert.assertEquals(list.get(i).findElements(By.xpath(".//div[contains(@class, 'sticker')]")).size(), 1);

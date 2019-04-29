@@ -53,7 +53,6 @@ public class AdminSectionChecker {
             el = driver.findElement(By.id(locator));
             el.click();
             Assert.assertTrue(driver.findElement(By.tagName("h1")).isDisplayed());
-//            System.out.println(driver.findElement(By.tagName("h1")).getText());
             subList = driver.findElements(By.cssSelector("#" + locator + " li"));
             if (subList.size() > 0) {
                 links.clear();
